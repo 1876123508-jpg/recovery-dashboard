@@ -3,88 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MKT_2026年回收管理数据看板</title>
+<title>MKT 2026年回收管理数据看板</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Segoe UI', sans-serif; background: #f0f2f5; color: #1a1a2e; }
-
-  .header {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-    padding: 24px 32px;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .header h1 { font-size: 20px; font-weight: 600; letter-spacing: 0.5px; }
+  .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); padding: 24px 32px; color: white; display: flex; align-items: center; justify-content: space-between; }
+  .header h1 { font-size: 20px; font-weight: 600; }
   .header .subtitle { font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 4px; }
   .header .update-time { font-size: 12px; color: rgba(255,255,255,0.5); }
-
   .container { padding: 24px 32px; max-width: 1400px; margin: 0 auto; }
-
-  /* KPI Cards */
   .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
-  .kpi-card {
-    background: white;
-    border-radius: 12px;
-    padding: 20px 24px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    position: relative;
-    overflow: hidden;
-  }
-  .kpi-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 4px; height: 100%;
-    border-radius: 4px 0 0 4px;
-  }
+  .kpi-card { background: white; border-radius: 12px; padding: 20px 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); position: relative; overflow: hidden; }
+  .kpi-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; border-radius: 4px 0 0 4px; }
   .kpi-card.total::before { background: #6366f1; }
   .kpi-card.pending::before { background: #f59e0b; }
   .kpi-card.transit::before { background: #3b82f6; }
   .kpi-card.delivered::before { background: #10b981; }
   .kpi-label { font-size: 12px; color: #6b7280; font-weight: 500; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
   .kpi-value { font-size: 32px; font-weight: 700; color: #1a1a2e; }
-  .kpi-pct { font-size: 13px; color: #9ca3af; margin-top: 4px; }
-  .kpi-badge {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: 600;
-  }
+  .kpi-badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; margin-top: 4px; }
   .badge-yellow { background: #fef3c7; color: #d97706; }
   .badge-blue { background: #dbeafe; color: #2563eb; }
   .badge-green { background: #d1fae5; color: #059669; }
-
-  /* Charts grid */
   .charts-row { display: grid; grid-template-columns: 340px 1fr; gap: 20px; margin-bottom: 20px; }
-  .chart-card {
-    background: white;
-    border-radius: 12px;
-    padding: 24px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  }
-  .chart-title {
-    font-size: 14px;
-    font-weight: 600;
-    color: #374151;
-    margin-bottom: 4px;
-  }
-  .chart-subtitle {
-    font-size: 12px;
-    color: #9ca3af;
-    margin-bottom: 20px;
-  }
-
-  .full-width { grid-column: 1 / -1; }
   .charts-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
-
-  /* Donut center text */
-  .donut-wrapper { position: relative; width: 240px; margin: 0 auto; }
-
-  /* SKU table */
+  .chart-card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .chart-title { font-size: 14px; font-weight: 600; color: #374151; margin-bottom: 4px; }
+  .chart-subtitle { font-size: 12px; color: #9ca3af; margin-bottom: 20px; }
+  .donut-wrapper { width: 260px; margin: 0 auto; }
   .sku-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
   .sku-table th { font-size: 11px; color: #6b7280; font-weight: 600; text-align: left; padding: 8px 12px; background: #f9fafb; border-bottom: 1px solid #e5e7eb; text-transform: uppercase; letter-spacing: 0.4px; }
   .sku-table td { font-size: 13px; padding: 10px 12px; border-bottom: 1px solid #f3f4f6; }
@@ -92,16 +39,9 @@
   .sku-table tr:hover td { background: #f9fafb; }
   .progress-bar { height: 6px; background: #f3f4f6; border-radius: 3px; margin-top: 4px; }
   .progress-fill { height: 100%; border-radius: 3px; }
-
-  /* Status pills */
   .pill { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
   .pill-pending { background: #fef3c7; color: #b45309; }
   .pill-transit { background: #dbeafe; color: #1d4ed8; }
-
-  canvas { max-height: 320px; }
-  .trend-canvas { max-height: 360px !important; }
-
-  /* Legend for line chart */
   .legend-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 12px; }
   .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #4b5563; }
   .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
@@ -111,126 +51,105 @@
 
 <div class="header">
   <div>
-    <h1>🔄 MKT 2026年回收管理数据看板</h1>
-    <div class="subtitle">数据来源：总回收表 · 共 6,250 条有效记录</div>
+    <h1>&#x1F504; MKT 2026&#x5E74;&#x56DE;&#x6536;&#x7BA1;&#x7406;&#x6570;&#x636E;&#x770B;&#x677F;</h1>
+    <div class="subtitle">&#x6570;&#x636E;&#x6765;&#x6E90;&#xFF1A;&#x603B;&#x56DE;&#x6536;&#x8868; &middot; &#x5171; 6,250 &#x6761;&#x6709;&#x6548;&#x8BB0;&#x5F55;</div>
   </div>
-  <div class="update-time">数据截至 2026-W26</div>
+  <div class="update-time">&#x6570;&#x636E;&#x622A;&#x81F3; 2026-W26</div>
 </div>
 
 <div class="container">
 
-  <!-- KPI Cards -->
   <div class="kpi-row">
     <div class="kpi-card total">
-      <div class="kpi-label">总回收记录</div>
+      <div class="kpi-label">&#x603B;&#x56DE;&#x6536;&#x8BB0;&#x5F55;</div>
       <div class="kpi-value">6,250</div>
-      <div class="kpi-pct">全部订单</div>
+      <div style="font-size:13px;color:#9ca3af;margin-top:4px">&#x5168;&#x90E8;&#x8BA2;&#x5355;</div>
     </div>
     <div class="kpi-card pending">
-      <div class="kpi-label">Pending · 待回收</div>
+      <div class="kpi-label">Pending &middot; &#x5F85;&#x56DE;&#x6536;</div>
       <div class="kpi-value">1,273</div>
-      <div class="kpi-pct"><span class="kpi-badge badge-yellow">占比 20.4%</span></div>
+      <div><span class="kpi-badge badge-yellow">&#x5360;&#x6BD4; 20.4%</span></div>
     </div>
     <div class="kpi-card transit">
-      <div class="kpi-label">InTransit · 运输中</div>
+      <div class="kpi-label">InTransit &middot; &#x8FD0;&#x8F93;&#x4E2D;</div>
       <div class="kpi-value">97</div>
-      <div class="kpi-pct"><span class="kpi-badge badge-blue">占比 1.6%</span></div>
+      <div><span class="kpi-badge badge-blue">&#x5360;&#x6BD4; 1.6%</span></div>
     </div>
     <div class="kpi-card delivered">
-      <div class="kpi-label">Delivered · 已回收</div>
+      <div class="kpi-label">Delivered &middot; &#x5DF2;&#x56DE;&#x6536;</div>
       <div class="kpi-value">4,880</div>
-      <div class="kpi-pct"><span class="kpi-badge badge-green">占比 78.1%</span></div>
+      <div><span class="kpi-badge badge-green">&#x5360;&#x6BD4; 78.1%</span></div>
     </div>
   </div>
 
-  <!-- Row 1: Donut + SKU Bar -->
   <div class="charts-row">
-
-    <!-- Donut: Overall Status -->
     <div class="chart-card">
-      <div class="chart-title">物流状态总览</div>
-      <div class="chart-subtitle">J列 · 全部回收状态占比</div>
-      <div class="donut-wrapper">
-        <canvas id="donutChart"></canvas>
-      </div>
+      <div class="chart-title">&#x7269;&#x6D41;&#x72B6;&#x6001;&#x603B;&#x89C8;</div>
+      <div class="chart-subtitle">J&#x5217; &middot; &#x5168;&#x90E8;&#x56DE;&#x6536;&#x72B6;&#x6001;&#x5360;&#x6BD4;</div>
+      <div class="donut-wrapper"><canvas id="donutChart"></canvas></div>
     </div>
-
-    <!-- Horizontal Bar: Pending SKU breakdown -->
     <div class="chart-card">
-      <div class="chart-title">未回收 SKU 分布</div>
-      <div class="chart-subtitle">Pending + InTransit 各 SKU 数量与占比</div>
+      <div class="chart-title">&#x672A;&#x56DE;&#x6536; SKU &#x5206;&#x5E03;</div>
+      <div class="chart-subtitle">Pending &#x72B6;&#x6001;&#x5404; SKU &#x6570;&#x91CF;</div>
       <canvas id="skuBar" style="max-height:300px"></canvas>
     </div>
-
   </div>
 
-  <!-- Row 2: SKU Detail Table + Stacked comparison -->
   <div class="charts-row2">
-
-    <!-- SKU Detail Table -->
     <div class="chart-card">
-      <div class="chart-title">未回收 SKU 明细</div>
-      <div class="chart-subtitle">Pending 与 InTransit 各 SKU 数量</div>
+      <div class="chart-title">&#x672A;&#x56DE;&#x6536; SKU &#x660E;&#x7EC6;</div>
+      <div class="chart-subtitle">Pending &#x4E0E; InTransit &#x5404; SKU &#x6570;&#x91CF;</div>
       <table class="sku-table">
         <thead>
           <tr>
-            <th>SKU</th>
-            <th>Pending</th>
-            <th>InTransit</th>
-            <th>小计</th>
-            <th style="width:100px">占比（未回收）</th>
+            <th>SKU</th><th>Pending</th><th>InTransit</th>
+            <th>&#x5C0F;&#x8BA1;</th><th style="width:100px">&#x5360;&#x6BD4;&#xFF08;&#x672A;&#x56DE;&#x6536;&#xFF09;</th>
           </tr>
         </thead>
         <tbody id="skuTableBody"></tbody>
       </table>
     </div>
-
-    <!-- Donut: Order type breakdown for unrecovered -->
     <div class="chart-card">
-      <div class="chart-title">未回收订单类型占比</div>
-      <div class="chart-subtitle">Pending + InTransit · 共 1,370 条</div>
-      <canvas id="orderTypeDonut" style="max-height:340px"></canvas>
+      <div class="chart-title">&#x672A;&#x56DE;&#x6536;&#x8BA2;&#x5355;&#x7C7B;&#x578B;&#x5360;&#x6BD4;</div>
+      <div class="chart-subtitle">Pending + InTransit &middot; &#x5171; 1,370 &#x6761;</div>
+      <canvas id="orderTypeDonut" style="max-height:320px"></canvas>
     </div>
-
   </div>
 
-  <!-- Row 3: Weekly Trend (full width) -->
   <div class="chart-card" style="margin-bottom:20px">
-    <div class="chart-title">未回收(Pending) 每周新增趋势</div>
-    <div class="chart-subtitle">2026年各周 · 按 SKU 区分（回收记录生成时间）</div>
-    <canvas id="trendLine" class="trend-canvas"></canvas>
+    <div class="chart-title">&#x672A;&#x56DE;&#x6536;(Pending) &#x6BCF;&#x5468;&#x65B0;&#x589E;&#x8D8B;&#x52BF;</div>
+    <div class="chart-subtitle">2026&#x5E74;&#x5404;&#x5468; &middot; &#x6309; SKU &#x533A;&#x5206;&#xFF08;&#x56DE;&#x6536;&#x8BB0;&#x5F55;&#x751F;&#x6210;&#x65F6;&#x95F4;&#xFF09;</div>
+    <canvas id="trendLine" style="max-height:360px"></canvas>
     <div class="legend-grid" id="trendLegend"></div>
   </div>
 
 </div>
 
 <script>
-// ============================================================
-// DATA
-// ============================================================
-const statusData = {
-  labels: ['Delivered (已回收)', 'Pending (待回收)', 'InTransit (运输中)'],
-  counts: [4880, 1273, 97],
-  colors: ['#10b981', '#f59e0b', '#3b82f6']
-};
+var statusLabels = ['Delivered', 'Pending', 'InTransit'];
+var statusCounts = [4880, 1273, 97];
+var statusColors = ['#10b981', '#f59e0b', '#3b82f6'];
+var statusTotal = 6250;
 
-const pendingBySku = {
+var pendingBySku = {
   'Yarbo body': 401, 'Yarbo body_FX': 258, 'm1 module': 234,
   'battery': 122, 'docking station': 87, 'mpro module': 83,
   'S1 module': 42, 'm1 module_FX': 12, 'b1 module': 10,
   'Yarbo body_23': 5, 'S1 module_23': 4, 'Others': 15
 };
-
-const transitBySku = {
+var transitBySku = {
   'Yarbo body': 27, 'Yarbo body_FX': 22, 'm1 module': 16,
   'battery': 9, 'm1 module_FX': 6, 'mpro module': 6,
-  'S1 module': 5, 'docking station': 4, 'b1 module': 1,
-  'S1 module_23': 1
+  'S1 module': 5, 'docking station': 4, 'b1 module': 1, 'S1 module_23': 1
 };
-
-const weeks = ["W02","W03","W04","W05","W06","W07","W08","W09","W10","W11","W12","W13","W14","W15","W16","W17","W18","W19","W20","W21","W22","W23","W24","W25","W26"];
-
-const weeklyPending = {
+var skuColors = {
+  'Yarbo body': '#6366f1', 'Yarbo body_FX': '#f59e0b',
+  'm1 module': '#10b981', 'battery': '#3b82f6',
+  'docking station': '#ec4899', 'mpro module': '#8b5cf6',
+  'S1 module': '#14b8a6', 'm1 module_FX': '#f97316', 'b1 module': '#a78bfa'
+};
+var weeks = ['W02','W03','W04','W05','W06','W07','W08','W09','W10','W11','W12','W13','W14','W15','W16','W17','W18','W19','W20','W21','W22','W23','W24','W25','W26'];
+var weeklyPending = {
   'Yarbo body':     [2,6,3,2,9,6,0,0,2,2,3,2,1,5,7,9,8,2,4,6,9,7,12,29,31],
   'Yarbo body_FX':  [2,3,3,2,3,2,1,3,2,2,3,0,3,1,6,1,4,4,17,6,11,0,8,11,121],
   'm1 module':      [0,0,0,0,0,0,0,0,0,2,3,1,2,0,3,4,6,5,4,10,8,8,10,23,29],
@@ -242,236 +161,120 @@ const weeklyPending = {
   'b1 module':      [0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,2,3,2]
 };
 
-const skuColors = {
-  'Yarbo body':     '#6366f1',
-  'Yarbo body_FX':  '#f59e0b',
-  'm1 module':      '#10b981',
-  'battery':        '#3b82f6',
-  'docking station':'#ec4899',
-  'mpro module':    '#8b5cf6',
-  'S1 module':      '#14b8a6',
-  'm1 module_FX':   '#f97316',
-  'b1 module':      '#a78bfa'
-};
-
-// ============================================================
-// CHART 1: Donut – Status Overview
-// ============================================================
-const donutCtx = document.getElementById('donutChart').getContext('2d');
-new Chart(donutCtx, {
+// Chart 1: Status donut
+new Chart(document.getElementById('donutChart').getContext('2d'), {
   type: 'doughnut',
   data: {
-    labels: statusData.labels,
-    datasets: [{
-      data: statusData.counts,
-      backgroundColor: statusData.colors,
-      borderWidth: 2,
-      borderColor: '#ffffff',
-      hoverOffset: 6
-    }]
+    labels: statusLabels,
+    datasets: [{ data: statusCounts, backgroundColor: statusColors, borderWidth: 2, borderColor: '#fff', hoverOffset: 6 }]
   },
   options: {
     cutout: '68%',
     plugins: {
-      legend: {
-        position: 'bottom',
-        labels: { font: { size: 11 }, padding: 12, usePointStyle: true, pointStyleWidth: 8 }
-      },
-      tooltip: {
-        callbacks: {
-          label: ctx => {
-            const pct = ((ctx.parsed / 6250) * 100).toFixed(1);
-            return ` ${ctx.label.split(' ')[0]}: ${ctx.parsed.toLocaleString()} (${pct}%)`;
-          }
-        }
-      }
+      legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 12, usePointStyle: true, pointStyleWidth: 8 } },
+      tooltip: { callbacks: { label: function(ctx) { var pct = ((ctx.parsed / statusTotal) * 100).toFixed(1); return ' ' + ctx.label + ': ' + ctx.parsed.toLocaleString() + ' (' + pct + '%)'; } } }
     }
   },
   plugins: [{
     id: 'centerText',
-    afterDraw(chart) {
-      const { ctx, chartArea: { top, bottom, left, right } } = chart;
-      const cx = (left + right) / 2, cy = (top + bottom) / 2;
+    afterDraw: function(chart) {
+      var ctx = chart.ctx, a = chart.chartArea;
+      var cx = (a.left + a.right) / 2, cy = (a.top + a.bottom) / 2;
       ctx.save();
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      ctx.font = 'bold 28px -apple-system, sans-serif';
-      ctx.fillStyle = '#1a1a2e';
+      ctx.font = 'bold 26px sans-serif'; ctx.fillStyle = '#1a1a2e';
       ctx.fillText('6,250', cx, cy - 10);
-      ctx.font = '12px -apple-system, sans-serif';
-      ctx.fillStyle = '#9ca3af';
-      ctx.fillText('总记录', cx, cy + 14);
+      ctx.font = '12px sans-serif'; ctx.fillStyle = '#9ca3af';
+      ctx.fillText('Total', cx, cy + 14);
       ctx.restore();
     }
   }]
 });
 
-// ============================================================
-// CHART 2: Horizontal Bar – SKU Breakdown (Pending)
-// ============================================================
-const skuNames = Object.keys(pendingBySku);
-const skuPendingVals = skuNames.map(k => pendingBySku[k]);
-const totalUnrecovered = skuNames.reduce((s, k) => s + pendingBySku[k], 0);
-
-const skuBarCtx = document.getElementById('skuBar').getContext('2d');
-new Chart(skuBarCtx, {
+// Chart 2: SKU bar
+var skuNames = Object.keys(pendingBySku);
+new Chart(document.getElementById('skuBar').getContext('2d'), {
   type: 'bar',
   data: {
     labels: skuNames,
-    datasets: [{
-      label: 'Pending 数量',
-      data: skuPendingVals,
-      backgroundColor: skuNames.map(k => skuColors[k] || '#94a3b8'),
-      borderRadius: 4,
-      borderSkipped: false
-    }]
+    datasets: [{ data: skuNames.map(function(k){ return pendingBySku[k]; }), backgroundColor: skuNames.map(function(k){ return skuColors[k] || '#94a3b8'; }), borderRadius: 4, borderSkipped: false }]
   },
   options: {
     indexAxis: 'y',
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        callbacks: {
-          label: ctx => {
-            const pct = ((ctx.parsed.x / totalUnrecovered) * 100).toFixed(1);
-            return ` ${ctx.parsed.x} 件 (${pct}%)`;
-          }
-        }
-      }
-    },
-    scales: {
-      x: { grid: { color: '#f3f4f6' }, ticks: { font: { size: 11 } } },
-      y: { grid: { display: false }, ticks: { font: { size: 12 } } }
-    }
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: function(ctx) { var pct = ((ctx.parsed.x / 1273) * 100).toFixed(1); return ' ' + ctx.parsed.x + ' (' + pct + '%)'; } } } },
+    scales: { x: { grid: { color: '#f3f4f6' } }, y: { grid: { display: false } } }
   }
 });
 
-// ============================================================
-// SKU Table
-// ============================================================
-const mainSkus = ['Yarbo body','Yarbo body_FX','m1 module','battery','docking station','mpro module','S1 module','m1 module_FX','b1 module','Yarbo body_23','S1 module_23','Others'];
-const tbody = document.getElementById('skuTableBody');
-const totalAll = mainSkus.reduce((s, k) => s + (pendingBySku[k] || 0) + (transitBySku[k] || 0), 0);
-
-mainSkus.forEach(sku => {
-  const p = pendingBySku[sku] || 0;
-  const t = transitBySkusku] || 0;
-  const sub = p + t;
-  const pct = ((sub / totalAll) * 100).toFixed(1);
-  const color = skuColors[sku] || '#94a3b8';
-  const tr = document.createElement('tr');
-  tr.innerHTML = `
-    <td><strong style="font-size:13px">${sku}</strong></td>
-    <td><span class="pill pill-pending">${p}</span></td>
-    <td><span class="pill pill-transit">${t}</span></td>
-    <td><strong>${sub}</strong></td>
-    <td>
-      <span style="font-size:12px;color:#6b7280">${pct}%</span>
-      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%;background:${color}"></div></div>
-    </td>
-  `;
+// SKU table
+var mainSkus = ['Yarbo body','Yarbo body_FX','m1 module','battery','docking station','mpro module','S1 module','m1 module_FX','b1 module','Yarbo body_23','S1 module_23','Others'];
+var tbody = document.getElementById('skuTableBody');
+var totalAll = mainSkus.reduce(function(s,k){ return s + (pendingBySku[k]||0) + (transitBySkuk]||0); }, 0);
+mainSkus.forEach(function(sku) {
+  var p = pendingBySku[sku] || 0, t = transitBySkusku] || 0;
+  var sub = p + t, pct = ((sub / totalAll) * 100).toFixed(1);
+  var color = skuColors[sku] || '#94a3b8';
+  var tr = document.createElement('tr');
+  tr.innerHTML = '<td><strong>' + sku + '</strong></td>' +
+    '<td><span class="pill pill-pending">' + p + '</span></td>' +
+    '<td><span class="pill pill-transit">' + t + '</span></td>' +
+    '<td><strong>' + sub + '</strong></td>' +
+    '<td><span style="font-size:12px;color:#6b7280">' + pct + '%</span>' +
+    '<div class="progress-bar"><div class="progress-fill" style="width:' + pct + '%;background:' + color + '"></div></div></td>';
   tbody.appendChild(tr);
 });
 
-// ============================================================
-// CHART 3: Donut – Order Type Breakdown (未回收)
-// ============================================================
-const orderTypeCtx = document.getElementById('orderTypeDonut').getContext('2d');
-const orderTypeData = { tob: 546, kol: 11, toc: 813 };
-const orderTotal = 1370;
-new Chart(orderTypeCtx, {
+// Chart 3: Order type donut
+new Chart(document.getElementById('orderTypeDonut').getContext('2d'), {
   type: 'doughnut',
   data: {
-    labels: ['ToC (其他)', 'ToB', 'KOL'],
-    datasets: [{
-      data: [orderTypeData.toc, orderTypeData.tob, orderTypeData.kol],
-      backgroundColor: ['#6366f1', '#f59e0b', '#10b981'],
-      borderWidth: 2,
-      borderColor: '#ffffff',
-      hoverOffset: 6
-    }]
+    labels: ['ToC', 'ToB', 'KOL'],
+    datasets: [{ data: [813, 546, 11], backgroundColor: ['#6366f1','#f59e0b','#10b981'], borderWidth: 2, borderColor: '#fff', hoverOffset: 6 }]
   },
   options: {
     cutout: '65%',
     plugins: {
-      legend: {
-        position: 'bottom',
-        labels: { font: { size: 12 }, padding: 16, usePointStyle: true, pointStyleWidth: 10 }
-      },
-      tooltip: {
-        callbacks: {
-          label: ctx => {
-            const pct = ((ctx.parsed / orderTotal) * 100).toFixed(1);
-            return ` ${ctx.label}: ${ctx.parsed.toLocaleString()} 件 (${pct}%)`;
-          }
-        }
-      }
+      legend: { position: 'bottom', labels: { font: { size: 12 }, padding: 16, usePointStyle: true, pointStyleWidth: 10 } },
+      tooltip: { callbacks: { label: function(ctx) { var pct = ((ctx.parsed / 1370) * 100).toFixed(1); return ' ' + ctx.label + ': ' + ctx.parsed.toLocaleString() + ' (' + pct + '%)'; } } }
     }
   },
   plugins: [{
-    id: 'orderCenterText',
-    afterDraw(chart) {
-      const { ctx, chartArea: { top, bottom, left, right } } = chart;
-      const cx = (left + right) / 2, cy = (top + bottom) / 2;
+    id: 'orderCenter',
+    afterDraw: function(chart) {
+      var ctx = chart.ctx, a = chart.chartArea;
+      var cx = (a.left + a.right) / 2, cy = (a.top + a.bottom) / 2;
       ctx.save();
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      ctx.font = 'bold 26px -apple-system, sans-serif';
-      ctx.fillStyle = '#1a1a2e';
+      ctx.font = 'bold 24px sans-serif'; ctx.fillStyle = '#1a1a2e';
       ctx.fillText('1,370', cx, cy - 10);
-      ctx.font = '12px -apple-system, sans-serif';
-      ctx.fillStyle = '#9ca3af';
-      ctx.fillText('未回收', cx, cy + 14);
+      ctx.font = '12px sans-serif'; ctx.fillStyle = '#9ca3af';
+      ctx.fillText('Unrecovered', cx, cy + 14);
       ctx.restore();
     }
   }]
 });
 
-// ============================================================
-// CHART 4: Line – Weekly Pending Trend
-// ============================================================
-const trendSkus = Object.keys(weeklyPending);
-const trendCtx = document.getElementById('trendLine').getContext('2d');
-
-const trendDatasets = trendSkus.map(sku => ({
-  label: sku,
-  data: weeklyPending[sku],
-  borderColor: skuColors[sku] || '#94a3b8',
-  backgroundColor: (skuColors[sku] || '#94a3b8') + '18',
-  borderWidth: 2,
-  pointRadius: 3,
-  pointHoverRadius: 5,
-  tension: 0.3,
-  fill: false
-}));
-
-new Chart(trendCtx, {
+// Chart 4: Weekly trend
+var trendSkus = Object.keys(weeklyPending);
+var trendDatasets = trendSkus.map(function(sku) {
+  return { label: sku, data: weeklyPending[sku], borderColor: skuColors[sku] || '#94a3b8', backgroundColor: (skuColors[sku] || '#94a3b8') + '18', borderWidth: 2, pointRadius: 3, pointHoverRadius: 5, tension: 0.3, fill: false };
+});
+new Chart(document.getElementById('trendLine').getContext('2d'), {
   type: 'line',
-  data: { labels: weeks.map(w => '2026-' + w), datasets: trendDatasets },
+  data: { labels: weeks.map(function(w){ return '2026-' + w; }), datasets: trendDatasets },
   options: {
-    plugins: {
-      legend: { display: false },
-      tooltip: { mode: 'index', intersect: false }
-    },
+    plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false } },
     interaction: { mode: 'index', intersect: false },
     scales: {
-      x: {
-        grid: { color: '#f3f4f6' },
-        ticks: { font: { size: 11 }, maxTicksLimit: 13 }
-      },
-      y: {
-        grid: { color: '#f3f4f6' },
-        ticks: { font: { size: 11 } },
-        title: { display: true, text: '新增 Pending 数量', font: { size: 11 }, color: '#9ca3af' }
-      }
+      x: { grid: { color: '#f3f4f6' }, ticks: { font: { size: 11 }, maxTicksLimit: 13 } },
+      y: { grid: { color: '#f3f4f6' }, ticks: { font: { size: 11 } } }
     }
   }
 });
-
-// Render custom legend
-const legendEl = document.getElementById('trendLegend');
-trendSkus.forEach(sku => {
-  const item = document.createElement('div');
-  item.className = 'legend-item';
-  item.innerHTML = `<div class="legend-dot" style="background:${skuColors[sku] || '#94a3b8'}"></div><span>${sku}</span>`;
+var legendEl = document.getElementById('trendLegend');
+trendSkus.forEach(function(sku) {
+  var item = document.createElement('div'); item.className = 'legend-item';
+  item.innerHTML = '<div class="legend-dot" style="background:' + (skuColors[sku]||'#94a3b8') + '"></div><span>' + sku + '</span>';
   legendEl.appendChild(item);
 });
 </script>
