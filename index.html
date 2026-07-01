@@ -209,9 +209,9 @@ new Chart(document.getElementById('skuBar').getContext('2d'), {
 // SKU table
 var mainSkus = ['Yarbo body','Yarbo body_FX','m1 module','battery','docking station','mpro module','S1 module','m1 module_FX','b1 module','Yarbo body_23','S1 module_23','Others'];
 var tbody = document.getElementById('skuTableBody');
-var totalAll = mainSkus.reduce(function(s,k){ return s + (pendingBySku[k]||0) + (transitBySkuk]||0); }, 0);
+var totalAll = mainSkus.reduce(function(s,k){ return s + (pendingBySku[k]||0) + (transitBySku[k]||0); }, 0);
 mainSkus.forEach(function(sku) {
-  var p = pendingBySku[sku] || 0, t = transitBySkusku] || 0;
+  var p = pendingBySku[sku] || 0, t = transitBySku[sku] || 0;
   var sub = p + t, pct = ((sub / totalAll) * 100).toFixed(1);
   var color = skuColors[sku] || '#94a3b8';
   var tr = document.createElement('tr');
