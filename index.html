@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!DOCTYPE html><!-- deploy:2026-07-03 -->
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>回收管理看板</title>
+<title>åæ¶ç®¡ççæ¿</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -52,40 +52,40 @@
 <body>
 <div class="header">
   <div>
-    <h1>📦 回收管理看板</h1>
-    <div style="font-size:12px;color:#475569;margin-top:4px;">MKT_2026年回收管理_S3 · 自动生成</div>
+    <h1>ð¦ åæ¶ç®¡ççæ¿</h1>
+    <div style="font-size:12px;color:#475569;margin-top:4px;">MKT_2026å¹´åæ¶ç®¡ç_S3 Â· èªå¨çæ</div>
   </div>
   <div class="meta">
-    <span class="total">总记录 6,365 条</span>
-    <span>数据日期：2026-07-03（W27）</span>
-    <span>源表：飞书 · zXC4uk</span>
+    <span class="total">æ»è®°å½ 6,365 æ¡</span>
+    <span>æ°æ®æ¥æï¼2026-07-03ï¼W27ï¼</span>
+    <span>æºè¡¨ï¼é£ä¹¦ Â· zXC4uk</span>
   </div>
 </div>
 <div class="container">
   <div class="kpi-grid">
-    <div class="kpi-card total"><div class="kpi-label">总记录</div><div class="kpi-value">6,365</div><div class="kpi-sub">全部订单</div></div>
-    <div class="kpi-card pending"><div class="kpi-label">待回收 Pending</div><div class="kpi-value">1,251</div><div class="kpi-sub">占总量 19.7%</div></div>
-    <div class="kpi-card transit"><div class="kpi-label">在途 InTransit</div><div class="kpi-value">135</div><div class="kpi-sub">占总量 2.1%</div></div>
-    <div class="kpi-card delivered"><div class="kpi-label">已回收 Delivered</div><div class="kpi-value">4,979</div><div class="kpi-sub">占总量 78.2%</div></div>
+    <div class="kpi-card total"><div class="kpi-label">æ»è®°å½</div><div class="kpi-value">6,365</div><div class="kpi-sub">å¨é¨è®¢å</div></div>
+    <div class="kpi-card pending"><div class="kpi-label">å¾åæ¶ Pending</div><div class="kpi-value">1,251</div><div class="kpi-sub">å æ»é 19.7%</div></div>
+    <div class="kpi-card transit"><div class="kpi-label">å¨é InTransit</div><div class="kpi-value">135</div><div class="kpi-sub">å æ»é 2.1%</div></div>
+    <div class="kpi-card delivered"><div class="kpi-label">å·²åæ¶ Delivered</div><div class="kpi-value">4,979</div><div class="kpi-sub">å æ»é 78.2%</div></div>
   </div>
   <div class="charts-row">
-    <div class="chart-card"><div class="chart-title">物流状态分布</div><div class="chart-wrapper" style="height:240px;"><canvas id="statusDonut"></canvas></div></div>
-    <div class="chart-card"><div class="chart-title">未回收订单类型（Pending + InTransit）</div><div class="chart-wrapper" style="height:240px;"><canvas id="orderTypeDonut"></canvas></div></div>
-    <div class="chart-card"><div class="chart-title">未回收 SKU 分布（横向条形）</div><div class="chart-wrapper" style="height:240px;"><canvas id="skuBar"></canvas></div></div>
+    <div class="chart-card"><div class="chart-title">ç©æµç¶æåå¸</div><div class="chart-wrapper" style="height:240px;"><canvas id="statusDonut"></canvas></div></div>
+    <div class="chart-card"><div class="chart-title">æªåæ¶è®¢åç±»åï¼Pending + InTransitï¼</div><div class="chart-wrapper" style="height:240px;"><canvas id="orderTypeDonut"></canvas></div></div>
+    <div class="chart-card"><div class="chart-title">æªåæ¶ SKU åå¸ï¼æ¨ªåæ¡å½¢ï¼</div><div class="chart-wrapper" style="height:240px;"><canvas id="skuBar"></canvas></div></div>
   </div>
   <div class="table-section">
-    <div class="table-title">SKU 明细表 — Pending / InTransit / 小计 / 占总量</div>
+    <div class="table-title">SKU æç»è¡¨ â Pending / InTransit / å°è®¡ / å æ»é</div>
     <table>
-      <thead><tr><th>SKU</th><th class="num">Pending</th><th class="num">InTransit</th><th class="num">小计（未回收）</th><th class="num">Delivered</th><th style="min-width:180px;">占总量比例</th><th class="num">总计</th></tr></thead>
+      <thead><tr><th>SKU</th><th class="num">Pending</th><th class="num">InTransit</th><th class="num">å°è®¡ï¼æªåæ¶ï¼</th><th class="num">Delivered</th><th style="min-width:180px;">å æ»éæ¯ä¾</th><th class="num">æ»è®¡</th></tr></thead>
       <tbody id="skuTableBody"></tbody>
     </table>
   </div>
   <div class="chart-card" style="margin-bottom:24px;">
-    <div class="chart-title">每周 Pending 新增趋势（2026 年，按 SKU）</div>
+    <div class="chart-title">æ¯å¨ Pending æ°å¢è¶å¿ï¼2026 å¹´ï¼æ SKUï¼</div>
     <div class="chart-wrapper" style="height:320px;"><canvas id="weeklyLine"></canvas></div>
   </div>
 </div>
-<div class="footer">自动生成 · 2026-07-03 · 数据来源：飞书 MKT_2026年回收管理_S3</div>
+<div class="footer">èªå¨çæ Â· 2026-07-03 Â· æ°æ®æ¥æºï¼é£ä¹¦ MKT_2026å¹´åæ¶ç®¡ç_S3</div>
 <script>
 const SKU_COLORS = {'Yarbo body':'#6366f1','Yarbo body_FX':'#f59e0b','m1 module':'#10b981','battery':'#3b82f6','docking station':'#ec4899','mpro module':'#8b5cf6','S1 module':'#14b8a6','m1 module_FX':'#f97316','b1 module':'#a78bfa','trimmer':'#94a3b8','unknown':'#64748b'};
 const skuByStatus = {
@@ -112,7 +112,7 @@ new Chart(statusCtx, {
   type: 'doughnut',
   data: { labels: ['Pending','InTransit','Delivered'], datasets: [{ data: [1251,135,4979], backgroundColor: ['#f59e0b','#3b82f6','#10b981'], borderWidth: 0, hoverOffset: 6 }] },
   options: { cutout: '65%', plugins: { legend: { position: 'bottom', labels: { padding: 16, font: { size: 12 } } }, tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.raw.toLocaleString()} (${(ctx.raw/6365*100).toFixed(1)}%)` } } }, layout: { padding: { top: 10 } } },
-  plugins: [{ id: 'c1', afterDraw(chart) { const {ctx,chartArea:{left,right,top,bottom}} = chart; const cx=(left+right)/2,cy=(top+bottom)/2; ctx.save(); ctx.font='bold 22px sans-serif'; ctx.fillStyle='#f1f5f9'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('6,365',cx,cy-8); ctx.font='12px sans-serif'; ctx.fillStyle='#64748b'; ctx.fillText('总记录',cx,cy+14); ctx.restore(); } }]
+  plugins: [{ id: 'c1', afterDraw(chart) { const {ctx,chartArea:{left,right,top,bottom}} = chart; const cx=(left+right)/2,cy=(top+bottom)/2; ctx.save(); ctx.font='bold 22px sans-serif'; ctx.fillStyle='#f1f5f9'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('6,365',cx,cy-8); ctx.font='12px sans-serif'; ctx.fillStyle='#64748b'; ctx.fillText('æ»è®°å½',cx,cy+14); ctx.restore(); } }]
 });
 const orderCtx = document.getElementById('orderTypeDonut').getContext('2d');
 const orderTotal = 815+560+11;
@@ -120,7 +120,7 @@ new Chart(orderCtx, {
   type: 'doughnut',
   data: { labels: ['ToC','ToB','KOL'], datasets: [{ data: [815,560,11], backgroundColor: ['#6366f1','#f59e0b','#10b981'], borderWidth: 0, hoverOffset: 6 }] },
   options: { cutout: '65%', plugins: { legend: { position: 'bottom', labels: { padding: 16, font: { size: 12 } } }, tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.raw.toLocaleString()} (${(ctx.raw/orderTotal*100).toFixed(1)}%)` } } }, layout: { padding: { top: 10 } } },
-  plugins: [{ id: 'c2', afterDraw(chart) { const {ctx,chartArea:{left,right,top,bottom}} = chart; const cx=(left+right)/2,cy=(top+bottom)/2; ctx.save(); ctx.font='bold 22px sans-serif'; ctx.fillStyle='#f1f5f9'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(orderTotal.toString(),cx,cy-8); ctx.font='12px sans-serif'; ctx.fillStyle='#64748b'; ctx.fillText('未回收总数',cx,cy+14); ctx.restore(); } }]
+  plugins: [{ id: 'c2', afterDraw(chart) { const {ctx,chartArea:{left,right,top,bottom}} = chart; const cx=(left+right)/2,cy=(top+bottom)/2; ctx.save(); ctx.font='bold 22px sans-serif'; ctx.fillStyle='#f1f5f9'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(orderTotal.toString(),cx,cy-8); ctx.font='12px sans-serif'; ctx.fillStyle='#64748b'; ctx.fillText('æªåæ¶æ»æ°',cx,cy+14); ctx.restore(); } }]
 });
 const pendingSkus = Object.entries(skuByStatus.Pending).sort((a,b)=>b[1]-a[1]);
 const barLabels = pendingSkus.map(([k])=>k);
