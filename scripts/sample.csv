@@ -1,0 +1,6 @@
+状态,订单类型,SKU,创建时间
+Pending,ToC,Yarbo body,2026-06-30 10:00:00
+Pending,ToB,m1 module,2026-06-30 11:00:00
+InTransit,ToC,battery,2026-06-29 09:00:00
+Delivered,KOL,docking station,2026-06-28 08:00:00
+Delivered,ToB,Yarbo body,2026-06-27 08:00:00
