@@ -1,4 +1,4 @@
-<!DOCTYPE html><!-- deploy:2026-07-03 -->
+<!DOCTYPE html><!-- deploy:2026-08-20 -->
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -56,17 +56,17 @@
     <div style="font-size:12px;color:#475569;margin-top:4px;">MKT_2026年回收管理_S3 · 自动生成</div>
   </div>
   <div class="meta">
-    <span class="total">总记录 6,365 条</span>
-    <span>数据日期：2026-07-03（W27）</span>
+    <span class="total">总记录 7,559 条</span>
+    <span>数据日期：2026-08-20（W34）</span>
     <span>源表：飞书 · zXC4uk</span>
   </div>
 </div>
 <div class="container">
   <div class="kpi-grid">
-    <div class="kpi-card total"><div class="kpi-label">总记录</div><div class="kpi-value">6,365</div><div class="kpi-sub">全部订单</div></div>
-    <div class="kpi-card pending"><div class="kpi-label">待回收 Pending</div><div class="kpi-value">1,251</div><div class="kpi-sub">占总量 19.7%</div></div>
-    <div class="kpi-card transit"><div class="kpi-label">在途 InTransit</div><div class="kpi-value">135</div><div class="kpi-sub">占总量 2.1%</div></div>
-    <div class="kpi-card delivered"><div class="kpi-label">已回收 Delivered</div><div class="kpi-value">4,979</div><div class="kpi-sub">占总量 78.2%</div></div>
+    <div class="kpi-card total"><div class="kpi-label">总记录</div><div class="kpi-value">7,559</div><div class="kpi-sub">全部订单</div></div>
+    <div class="kpi-card pending"><div class="kpi-label">待回收 Pending</div><div class="kpi-value">1,587</div><div class="kpi-sub">占总量 21.0%</div></div>
+    <div class="kpi-card transit"><div class="kpi-label">在途 InTransit</div><div class="kpi-value">152</div><div class="kpi-sub">占总量 2.0%</div></div>
+    <div class="kpi-card delivered"><div class="kpi-label">已回收 Delivered</div><div class="kpi-value">5,820</div><div class="kpi-sub">占总量 77.0%</div></div>
   </div>
   <div class="charts-row">
     <div class="chart-card"><div class="chart-title">物流状态分布</div><div class="chart-wrapper" style="height:240px;"><canvas id="statusDonut"></canvas></div></div>
@@ -85,40 +85,27 @@
     <div class="chart-wrapper" style="height:320px;"><canvas id="weeklyLine"></canvas></div>
   </div>
 </div>
-<div class="footer">自动生成 · 2026-07-03 · 数据来源：飞书 MKT_2026年回收管理_S3</div>
+<div class="footer">自动生成 · 2026-08-20 · 数据来源：飞书 MKT_2026年回收管理_S3</div>
 <script>
 const SKU_COLORS = {'Yarbo body':'#6366f1','Yarbo body_FX':'#f59e0b','m1 module':'#10b981','battery':'#3b82f6','docking station':'#ec4899','mpro module':'#8b5cf6','S1 module':'#14b8a6','m1 module_FX':'#f97316','b1 module':'#a78bfa','trimmer':'#94a3b8','unknown':'#64748b'};
-const skuByStatus = {
-  Pending: {'m1 module':253,'docking station':110,'Yarbo body':630,'battery':123,'mpro module':78,'trimmer':3,'S1 module':45,'b1 module':9},
-  InTransit: {'mpro module':9,'Yarbo body':78,'battery':10,'m1 module':22,'docking station':7,'trimmer':2,'S1 module':6,'b1 module':1},
-  Delivered: {'mpro module':148,'Yarbo body':2724,'m1 module':989,'battery':302,'b1 module':51,'docking station':331,'S1 module':420,'trimmer':14}
-};
-const orderTypeCount = {tob:560, kol:11, toc:815};
-const weeks = ["2026-W02","2026-W03","2026-W04","2026-W05","2026-W06","2026-W07","2026-W08","2026-W09","2026-W10","2026-W11","2026-W12","2026-W13","2026-W14","2026-W15","2026-W16","2026-W17","2026-W18","2026-W19","2026-W20","2026-W21","2026-W22","2026-W23","2026-W24","2026-W25","2026-W26","2026-W27"];
-const pendingWeeklyBySku = {
-  'Yarbo body': {'2026-W02':4,'2026-W03':9,'2026-W04':6,'2026-W05':4,'2026-W06':12,'2026-W07':8,'2026-W08':1,'2026-W09':3,'2026-W10':4,'2026-W11':4,'2026-W12':6,'2026-W13':2,'2026-W14':4,'2026-W15':5,'2026-W16':13,'2026-W17':10,'2026-W18':12,'2026-W19':6,'2026-W20':21,'2026-W21':11,'2026-W22':19,'2026-W23':7,'2026-W24':18,'2026-W25':29,'2026-W26':98,'2026-W27':31},
-  'm1 module': {'2026-W11':2,'2026-W12':3,'2026-W13':1,'2026-W14':2,'2026-W16':3,'2026-W17':4,'2026-W18':6,'2026-W19':5,'2026-W20':4,'2026-W21':10,'2026-W22':7,'2026-W23':9,'2026-W24':10,'2026-W25':19,'2026-W26':25,'2026-W27':19},
-  'battery': {'2026-W02':1,'2026-W03':3,'2026-W06':1,'2026-W09':1,'2026-W10':3,'2026-W11':1,'2026-W12':2,'2026-W13':3,'2026-W14':2,'2026-W15':3,'2026-W16':1,'2026-W17':7,'2026-W18':1,'2026-W19':1,'2026-W20':3,'2026-W21':8,'2026-W22':3,'2026-W23':5,'2026-W24':7,'2026-W25':9,'2026-W26':10,'2026-W27':11},
-  'docking station': {'2026-W02':1,'2026-W04':2,'2026-W08':2,'2026-W10':1,'2026-W12':2,'2026-W13':1,'2026-W14':2,'2026-W15':2,'2026-W16':1,'2026-W17':2,'2026-W18':1,'2026-W19':1,'2026-W20':4,'2026-W21':10,'2026-W22':6,'2026-W23':5,'2026-W24':7,'2026-W25':4,'2026-W26':3,'2026-W27':24},
-  'mpro module': {'2026-W04':1,'2026-W06':1,'2026-W07':2,'2026-W12':1,'2026-W15':2,'2026-W16':2,'2026-W17':4,'2026-W18':3,'2026-W19':2,'2026-W20':2,'2026-W22':2,'2026-W23':8,'2026-W24':6,'2026-W25':16,'2026-W26':13,'2026-W27':12},
-  'S1 module': {'2026-W02':1,'2026-W03':3,'2026-W04':1,'2026-W05':2,'2026-W06':4,'2026-W07':1,'2026-W10':2,'2026-W11':3,'2026-W12':1,'2026-W13':2,'2026-W14':1,'2026-W15':2,'2026-W16':1,'2026-W17':1,'2026-W20':1,'2026-W25':1},
-  'b1 module': {'2026-W03':1,'2026-W16':1,'2026-W18':1,'2026-W24':1},
-  'trimmer': {'2026-W17':1,'2026-W26':2}
-};
+const skuByStatus = {"Pending":{"Yarbo body":795,"m1 module":264,"mpro module":180,"battery":161,"docking station":129,"S1 module":42,"b1 module":10,"trimmer":6},"InTransit":{"Yarbo body":94,"mpro module":10,"docking station":9,"battery":9,"trimmer":1,"m1 module":21,"b1 module":2,"S1 module":6},"Delivered":{"battery":373,"mpro module":242,"Yarbo body":3163,"docking station":387,"trimmer":20,"m1 module":1157,"S1 module":426,"b1 module":52}};
+const orderTypeCount = {"tob":711,"kol":11,"toc":1017};
+const weeks = ["2026-W01","2026-W02","2026-W03","2026-W04","2026-W05","2026-W06","2026-W07","2026-W08","2026-W09","2026-W10","2026-W11","2026-W12","2026-W13","2026-W14","2026-W15","2026-W16","2026-W17","2026-W18","2026-W19","2026-W20","2026-W21","2026-W22","2026-W23","2026-W24","2026-W25","2026-W26","2026-W27","2026-W28","2026-W29","2026-W30","2026-W31","2026-W32","2026-W33","2026-W34"];
+const pendingWeeklyBySku = {"Yarbo body":{"2026-W32":69,"2026-W31":86,"2026-W30":70,"2026-W29":37,"2026-W28":27,"2026-W27":24,"2026-W26":25,"2026-W25":24,"2026-W24":10,"2026-W23":8,"2026-W22":7,"2026-W21":11,"2026-W20":12,"2026-W19":10,"2026-W18":11,"2026-W17":8,"2026-W16":11,"2026-W15":6,"2026-W14":4,"2026-W13":2,"2026-W12":5,"2026-W11":4,"2026-W10":4,"2026-W09":3,"2026-W07":8,"2026-W06":10,"2026-W05":5,"2026-W04":6,"2026-W03":7,"2026-W02":6},"m1 module":{"2026-W32":25,"2026-W31":14,"2026-W30":14,"2026-W29":9,"2026-W28":13,"2026-W27":8,"2026-W26":4,"2026-W25":9,"2026-W24":4,"2026-W23":6,"2026-W22":6,"2026-W21":6,"2026-W20":4,"2026-W19":1,"2026-W18":6,"2026-W17":4,"2026-W16":3,"2026-W14":2,"2026-W13":1,"2026-W12":3,"2026-W11":1},"mpro module":{"2026-W32":66,"2026-W31":35,"2026-W30":6,"2026-W29":9,"2026-W28":10,"2026-W27":4,"2026-W26":6,"2026-W25":10,"2026-W24":4,"2026-W23":7,"2026-W22":2,"2026-W20":2,"2026-W19":2,"2026-W18":3,"2026-W17":4,"2026-W16":2,"2026-W15":1,"2026-W14":1,"2026-W12":1,"2026-W07":1,"2026-W06":2,"2026-W04":1},"battery":{"2026-W32":17,"2026-W31":8,"2026-W30":11,"2026-W29":9,"2026-W28":8,"2026-W27":4,"2026-W26":8,"2026-W25":8,"2026-W24":7,"2026-W23":3,"2026-W22":4,"2026-W21":7,"2026-W20":3,"2026-W18":1,"2026-W17":4,"2026-W16":3,"2026-W15":3,"2026-W14":2,"2026-W13":3,"2026-W12":1,"2026-W11":1,"2026-W10":3,"2026-W09":1,"2026-W06":1,"2026-W03":3,"2026-W02":1},"docking station":{"2026-W32":10,"2026-W31":15,"2026-W30":8,"2026-W29":8,"2026-W28":6,"2026-W27":9,"2026-W26":1,"2026-W25":2,"2026-W24":6,"2026-W23":5,"2026-W22":3,"2026-W21":9,"2026-W20":2,"2026-W19":1,"2026-W18":1,"2026-W17":1,"2026-W16":1,"2026-W15":1,"2026-W14":2,"2026-W13":1,"2026-W12":1,"2026-W11":1,"2026-W10":1,"2026-W08":2,"2026-W04":2,"2026-W01":1},"S1 module":{"2026-W32":1,"2026-W28":1,"2026-W17":1,"2026-W16":1,"2026-W15":2,"2026-W13":2,"2026-W12":1,"2026-W11":3,"2026-W10":2,"2026-W07":1,"2026-W06":4,"2026-W05":2,"2026-W04":1,"2026-W03":2,"2026-W02":1},"b1 module":{"2026-W31":1,"2026-W29":1,"2026-W18":1,"2026-W16":1,"2026-W02":1},"trimmer":{"2026-W31":5,"2026-W17":1}};
 Chart.defaults.color = '#64748b';
 Chart.defaults.borderColor = '#1e293b';
 const statusCtx = document.getElementById('statusDonut').getContext('2d');
 new Chart(statusCtx, {
   type: 'doughnut',
-  data: { labels: ['Pending','InTransit','Delivered'], datasets: [{ data: [1251,135,4979], backgroundColor: ['#f59e0b','#3b82f6','#10b981'], borderWidth: 0, hoverOffset: 6 }] },
-  options: { cutout: '65%', plugins: { legend: { position: 'bottom', labels: { padding: 16, font: { size: 12 } } }, tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.raw.toLocaleString()} (${(ctx.raw/6365*100).toFixed(1)}%)` } } }, layout: { padding: { top: 10 } } },
-  plugins: [{ id: 'c1', afterDraw(chart) { const {ctx,chartArea:{left,right,top,bottom}} = chart; const cx=(left+right)/2,cy=(top+bottom)/2; ctx.save(); ctx.font='bold 22px sans-serif'; ctx.fillStyle='#f1f5f9'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('6,365',cx,cy-8); ctx.font='12px sans-serif'; ctx.fillStyle='#64748b'; ctx.fillText('总记录',cx,cy+14); ctx.restore(); } }]
+  data: { labels: ['Pending','InTransit','Delivered'], datasets: [{ data: [1587,152,5820], backgroundColor: ['#f59e0b','#3b82f6','#10b981'], borderWidth: 0, hoverOffset: 6 }] },
+  options: { cutout: '65%', plugins: { legend: { position: 'bottom', labels: { padding: 16, font: { size: 12 } } }, tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.raw.toLocaleString()} (${(ctx.raw/7559*100).toFixed(1)}%)` } } }, layout: { padding: { top: 10 } } },
+  plugins: [{ id: 'c1', afterDraw(chart) { const {ctx,chartArea:{left,right,top,bottom}} = chart; const cx=(left+right)/2,cy=(top+bottom)/2; ctx.save(); ctx.font='bold 22px sans-serif'; ctx.fillStyle='#f1f5f9'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('7,559',cx,cy-8); ctx.font='12px sans-serif'; ctx.fillStyle='#64748b'; ctx.fillText('总记录',cx,cy+14); ctx.restore(); } }]
 });
 const orderCtx = document.getElementById('orderTypeDonut').getContext('2d');
-const orderTotal = 815+560+11;
+const orderTotal = 1739;
 new Chart(orderCtx, {
   type: 'doughnut',
-  data: { labels: ['ToC','ToB','KOL'], datasets: [{ data: [815,560,11], backgroundColor: ['#6366f1','#f59e0b','#10b981'], borderWidth: 0, hoverOffset: 6 }] },
+  data: { labels: ['ToC','ToB','KOL'], datasets: [{ data: [1017,711,11], backgroundColor: ['#6366f1','#f59e0b','#10b981'], borderWidth: 0, hoverOffset: 6 }] },
   options: { cutout: '65%', plugins: { legend: { position: 'bottom', labels: { padding: 16, font: { size: 12 } } }, tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.raw.toLocaleString()} (${(ctx.raw/orderTotal*100).toFixed(1)}%)` } } }, layout: { padding: { top: 10 } } },
   plugins: [{ id: 'c2', afterDraw(chart) { const {ctx,chartArea:{left,right,top,bottom}} = chart; const cx=(left+right)/2,cy=(top+bottom)/2; ctx.save(); ctx.font='bold 22px sans-serif'; ctx.fillStyle='#f1f5f9'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(orderTotal.toString(),cx,cy-8); ctx.font='12px sans-serif'; ctx.fillStyle='#64748b'; ctx.fillText('未回收总数',cx,cy+14); ctx.restore(); } }]
 });
@@ -133,7 +120,7 @@ new Chart(barCtx, {
   ]},
   options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { stacked: true, grid: { color: '#334155' } }, y: { stacked: true, grid: { display: false }, ticks: { font: { size: 11 } } } } }
 });
-const allSkus = ['Yarbo body','m1 module','docking station','battery','mpro module','S1 module','b1 module','trimmer'];
+const allSkus = [...new Set([...Object.keys(skuByStatus.Pending), ...Object.keys(skuByStatus.InTransit), ...Object.keys(skuByStatus.Delivered)])];
 const tbody = document.getElementById('skuTableBody');
 allSkus.forEach(sku => {
   const p=skuByStatus.Pending[sku]||0,t=skuByStatus.InTransit[sku]||0,d=skuByStatus.Delivered[sku]||0;
@@ -152,4 +139,3 @@ new Chart(lineCtx, {
 </script>
 </body>
 </html>
-
