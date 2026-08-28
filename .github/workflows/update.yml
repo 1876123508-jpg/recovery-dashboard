@@ -2,8 +2,10 @@ name: Update Dashboard from Feishu
 
 on:
   schedule:
-    # Every Friday 07:00 UTC = 15:00 Beijing time
-    - cron: '0 7 * * 5'
+    # Every hour on Friday (UTC) as a robustness fallback; the build step
+    # gates on Beijing time >= 15:00 so the dashboard updates once on Friday
+    # afternoon even if GitHub skips a scheduled slot.
+    - cron: '0 * * * 5'
   workflow_dispatch: # allow manual run from the Actions tab
 
 permissions:
@@ -27,7 +29,16 @@ jobs:
           FEISHU_APP_SECRET: ${{ secrets.FEISHU_APP_SECRET }}
           FEISHU_WIKI_TOKEN: YOLNwm8Oritw0jkU8sQcVa8tn1g
           FEISHU_SHEET_ID: zXC4uk
-        run: node scripts/build.mjs
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "schedule" ]; then
+            DOW=$(TZ='Asia/Shanghai' date +%u)
+            HOUR=$(TZ='Asia/Shanghai' date +%H)
+            if [ "$DOW" != "5" ] || [ "$HOUR" -lt 15 ]; then
+              echo "Scheduled run outside window (Friday >= 15:00 Beijing, current DOW=$DOW HOUR=$HOUR). Skipping."
+              exit 0
+            fi
+          fi
+          node scripts/build.mjs
 
       - name: Commit and push
         run: |
