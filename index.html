@@ -90,17 +90,6 @@
   </div>
 
   <div class="full-card">
-    <div class="chart-title">每周 Pending 趋势（按 SKU，可按年份/月份切换）</div>
-    <div class="controls">
-      <label>年份</label><select id="weekYear"></select>
-      <label>月份</label><select id="weekMonth"></select>
-      <span class="hint">默认显示最近有数据的月份；切换后即时刷新。</span>
-    </div>
-    <div class="chart-wrapper" style="height:320px;"><canvas id="weeklyLine"></canvas></div>
-    <div class="hint" id="weekEmpty" style="display:none;">所选月份暂无 Pending 周数据</div>
-  </div>
-
-  <div class="full-card">
     <div class="chart-title">各 SKU 月度 Pending 数据（可按年份/月份查看）</div>
     <div class="controls">
       <label>年份</label><select id="monthYear"></select>
@@ -116,6 +105,17 @@
       </table>
       </div>
     </div>
+  </div>
+
+  <div class="full-card">
+    <div class="chart-title">每周 Pending 趋势（按 SKU，可按年份/月份切换）</div>
+    <div class="controls">
+      <label>年份</label><select id="weekYear"></select>
+      <label>月份</label><select id="weekMonth"></select>
+      <span class="hint">默认显示最近有数据的月份；切换后即时刷新。</span>
+    </div>
+    <div class="chart-wrapper" style="height:320px;"><canvas id="weeklyLine"></canvas></div>
+    <div class="hint" id="weekEmpty" style="display:none;">所选月份暂无 Pending 周数据</div>
   </div>
 </div>
 <div class="footer">自动生成 · 2026-09-07 · 数据来源：飞书 MKT_2026年回收管理_S3</div>
